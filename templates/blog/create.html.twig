@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% form_theme formPost 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+
+    <h1>Création de votre post</h1>
+    {{ form_start(formPost) }}
+    {{ form_widget(formPost) }}
+
+    <button type="submit" class="btn btn-success">
+        {% if editMode %}
+        Enregistrer les modifications
+        {% else %}
+        Poster ma post
+        {% endif %}
+    </button>
+    {{ form_end(formPost) }}
+
+
+{% endblock %}

@@ -7,6 +7,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Post;
 use App\Repository\PostRepository;
+use App\Form\PostType;
+
+
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormBuilderInterface;
+
 
 class BlogController extends AbstractController
 {
@@ -28,6 +38,33 @@ class BlogController extends AbstractController
         ]);
     }
     
+    #[Route('/blog/new', name:"blog_new")]
+    #[Route('/blog/{id}/edit', name:"blog_edit")]
+    public function form(Post $post = null, Request $request, EntityManagerInterface $manager): Response
+    {
+        if(!$post){
+            $post = new Post();
+        }
+
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            if(!$post->getId()){
+                $post->setCreatedAt(new \DateTime());
+            }
+            
+            
+            $manager->persist($post);
+            $manager->flush();
+            return $this->redirectToRoute('blog_show',['id' => $post->getId()]);
+        }
+        return $this->render('blog/create.html.twig', [
+            'formPost' => $form->createView(),
+            'editMode' => $post->getId() !==null
+        ]);
+    }
+
     #[Route('/blog/{id}', name:"blog_show")]
     public function show(Post $post): Response
     {
@@ -35,5 +72,4 @@ class BlogController extends AbstractController
             'post' => $post
         ]);
     }
-
 }
