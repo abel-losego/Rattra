@@ -3,14 +3,39 @@
 {% block body %}
     <article>
             <h2>{{ post.createdBy }}</h2>
-            <div class="metadata">Posté le {{ post.createdAt | date("d/m/Y") }} à {{ post.createdAt | date("H:i") }} dans la catégorie Bord de mer</div>
+            <div class="metadata">Posté le {{ post.createdAt | date("d/m/Y") }} à {{ post.createdAt | date("H:i") }} dans la catégorie {{ post.category.title }}</div>
             <div class="content">
                 <img src="{{ post.image }}" alt="">
                 <h3>{{ post.title }}<h3>
                 <p>{{ post.content | raw }}</p>
             </div>
             <a href="" class="btn btn-primary">J'aime</a>
-            <a href="" class="btn btn-primary">Commenter</a>
             <a href="{{ path('blog_edit', {id: post.id})}}" class="btn btn-primary">Modifier</a>
+            <hr>
+            
+            <section id="commentaires">
+                {% for comment in post.comments %}
+                <div class="comment">
+                    <div class="raw">
+                        <div>
+                        {{comment.author}} (<small> Posté le {{ post.createdAt | date("d/m/Y") }} à {{ post.createdAt | date("H:i") }}</small>)
+                        </div>
+
+                        <div class="col">
+                            {{comment.content | raw}}
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </section>
+            <section>
+
+            {{ form_widget(formComment.author) }}
+            {{ form_widget(formComment.content) }}
+            <button type="submit" class="btn btn-success">Poster mon commentaire</button>
+
+            </section>
+
     </article>
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Post;
+use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,38 +14,29 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
-class PostType extends AbstractType
+class CommentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title' , TextType::class, [
+            ->add('author', TextType::class, [
                 'attr' => [
-                    'placeholder' => 'Inserer votre titre'
+                    'placeholder' => 'Inserer votre nom'
                 ]
-             ])
-            ->add('createdBy')
+            ])
             ->add('createdAt')
             ->add('content', TextareaType::class, [
                 'attr' => [
-                    'placeholder' => 'Description du lieu et de ses environs (activités, visites, points positifs comme négatifs)'
+                    'placeholder' => 'Inserer le contenu de votre commentaire'
                 ]
             ])
-            ->add('image', TextType::class, [
-                'attr' => [
-                    'placeholder' => 'Inserer votre image'
-                ]
-            ])
-            ->add('category', EntityType::class, [
-                'class'=> Category::class,
-                'choice_label' =>'title'
-            ])
+            ->add('post')
         ;
     }
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Post::class,
+            'data_class' => Comment::class,
         ]);
     }
 }

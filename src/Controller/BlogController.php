@@ -6,11 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Post;
+use App\Entity\Comment;
 use App\Repository\PostRepository;
 use App\Form\PostType;
 
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,7 +56,6 @@ class BlogController extends AbstractController
                 $post->setCreatedAt(new \DateTime());
             }
             
-            
             $manager->persist($post);
             $manager->flush();
             return $this->redirectToRoute('blog_show',['id' => $post->getId()]);
@@ -67,9 +68,35 @@ class BlogController extends AbstractController
 
     #[Route('/blog/{id}', name:"blog_show")]
     public function show(Post $post): Response
-    {
+    {   
         return $this->render('blog/show.html.twig', [
             'post' => $post
+        ]);
+    }
+
+    #[Route('/blog/{id}', name:"blog_show")]
+    public function comment(Post $post): Response
+    {   
+        $comment = new Comment();
+        $form = $this->createFormBuilder($comment)
+                ->add('createdAt')
+                ->add('post', IntegerType::class)
+                ->add('author', TextType::class, [
+                    'attr' => [
+                        'placeholder' => "Inserer le nom de l'auteur"
+                    ]
+                ])
+                ->add('content', TextareaType::class, [
+                    'attr' => [
+                        'placeholder' => "Ecrivez votre commentaire "
+                    ]
+                ])
+                ->getForm();
+        
+        
+        return $this->render('blog/show.html.twig', [
+            'post' => $post,
+            'formComment' => $form->createView()
         ]);
     }
 }

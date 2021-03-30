@@ -2,18 +2,39 @@
 {% form_theme formPost 'bootstrap_4_layout.html.twig' %}
 {% block body %}
 
-    <h1>Création de votre post</h1>
-    {{ form_start(formPost) }}
-    {{ form_widget(formPost) }}
+    <h1>{% if editMode %}
+        Modification de votre post
+        {% else %}
+        Création de votre post
+        {% endif %}</h1>
+
+    {{ form_start(formPost.image) }}
+    <div class="form-groupe">
+        <label for="">Titre</label>
+        {{ form_widget(formPost.title) }}
+    </div>
+    <div class="form-groupe">
+        <label for="">Image</label>
+       {{ form_widget(formPost.image) }}
+    </div>
+    <div class="form-groupe">
+        <label for="">Catégorie</label>
+        {{ form_widget(formPost.category) }}
+    </div>
+    <div class="form-groupe">
+        <label for="">Description</label>
+        {{ form_widget(formPost.content) }}
+    </div>
+
 
     <button type="submit" class="btn btn-success">
         {% if editMode %}
         Enregistrer les modifications
         {% else %}
-        Poster ma post
+        Poster ma photo
         {% endif %}
     </button>
-    {{ form_end(formPost) }}
+    {{ form_end(formPost.image) }}
 
 
 {% endblock %}
