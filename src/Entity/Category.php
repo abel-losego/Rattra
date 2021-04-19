@@ -32,11 +32,11 @@ class Category
     /**
      * @ORM\OneToMany(targetEntity=Post::class, mappedBy="category")
      */
-    private $Posts;
+    private $posts;
 
     public function __construct()
     {
-        $this->Posts = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -73,13 +73,13 @@ class Category
      */
     public function getPosts(): Collection
     {
-        return $this->Posts;
+        return $this->posts;
     }
 
     public function addPost(Post $post): self
     {
-        if (!$this->Posts->contains($post)) {
-            $this->Posts[] = $post;
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
             $post->setCategory($this);
         }
 
@@ -88,7 +88,7 @@ class Category
 
     public function removePost(Post $post): self
     {
-        if ($this->Posts->removeElement($post)) {
+        if ($this->posts->removeElement($post)) {
             // set the owning side to null (unless already changed)
             if ($post->getCategory() === $this) {
                 $post->setCategory(null);

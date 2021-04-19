@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
+
 class CommentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -24,13 +25,11 @@ class CommentType extends AbstractType
                     'placeholder' => 'Inserer votre nom'
                 ]
             ])
-            ->add('createdAt')
             ->add('content', TextareaType::class, [
                 'attr' => [
                     'placeholder' => 'Inserer le contenu de votre commentaire'
                 ]
             ])
-            ->add('post')
         ;
     }
     public function configureOptions(OptionsResolver $resolver)

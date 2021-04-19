@@ -12,13 +12,13 @@
             <a href="" class="btn btn-primary">J'aime</a>
             <a href="{{ path('blog_edit', {id: post.id})}}" class="btn btn-primary">Modifier</a>
             <hr>
-            
+            <h2>Commentaires ({{ post.comments | length }}) </h2>
             <section id="commentaires">
                 {% for comment in post.comments %}
                 <div class="comment">
                     <div class="raw">
                         <div>
-                        {{comment.author}} (<small> Posté le {{ post.createdAt | date("d/m/Y") }} à {{ post.createdAt | date("H:i") }}</small>)
+                        {{comment.author}} (<small> Posté le {{ comment.createdAt | date("d/m/Y") }} à {{ comment.createdAt | date("H:i") }}</small>)
                         </div>
 
                         <div class="col">
@@ -29,13 +29,30 @@
                 </div>
                 {% endfor %}
             </section>
-            <section>
-
-            {{ form_widget(formComment.author) }}
-            {{ form_widget(formComment.content) }}
+            <hr>
+            {% if app.user %}
+            <h2>Ajouter un commentaire</h2>
+            <section id="commenter">
+            {{ form_start(formComment) }}
+    
+            <div class="form-groupe">
+                <label for="">Auteur</label>
+                {{ form_widget(formComment.author) }}
+            </div>
+            <div class="form-groupe">
+                <label for="">Contenu du commentaire</label>
+                {{ form_widget(formComment.content) }}
+            </div>
+            
             <button type="submit" class="btn btn-success">Poster mon commentaire</button>
-
+            {{ form_end(formComment) }}
             </section>
+
+            {% else %}
+            <h2>Veuiller vous connecter pour commenter</h2>
+            <a href="{{ path('secu_login')}}" class="btn btn-primary">Se connecter</a>
+
+            {% endif %}
 
     </article>
 {% endblock %}

@@ -57,7 +57,7 @@ class Post
     private $image;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="Posts")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="posts")
      * @ORM\JoinColumn(nullable=false)
      */
     private $category;

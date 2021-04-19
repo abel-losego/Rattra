@@ -8,9 +8,11 @@
         Création de votre post
         {% endif %}</h1>
 
-    {{ form_start(formPost.image) }}
+    {{ form_start(formPost) }}
+    
     <div class="form-groupe">
         <label for="">Titre</label>
+        {{ form_errors(formPost.title) }}
         {{ form_widget(formPost.title) }}
     </div>
     <div class="form-groupe">
@@ -23,7 +25,12 @@
     </div>
     <div class="form-groupe">
         <label for="">Description</label>
+        {{ form_errors(formPost.content) }}
         {{ form_widget(formPost.content) }}
+    </div>
+    <div class="form-groupe">
+        <label for="">Auteur</label>
+        {{ form_widget(formPost.createdBy)}}
     </div>
 
 
@@ -34,7 +41,7 @@
         Poster ma photo
         {% endif %}
     </button>
-    {{ form_end(formPost.image) }}
+    {{ form_end(formPost) }}
 
 
 {% endblock %}
