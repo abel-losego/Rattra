@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Category;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\File;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PostType extends AbstractType
 {
@@ -31,19 +32,7 @@ class PostType extends AbstractType
                     'placeholder' => 'Description du lieu et de ses environs (activités, visites, points positifs comme négatifs)'
                 ]
             ])
-            ->add('image', FileType::class, [
-                'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'application/pdf',
-                            'application/x-pdf',
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid PDF document',
-                    ])]
-
-            ])
+            ->add('imageFile', VichImageType::class)
             ->add('category', EntityType::class, [
                 'class'=> Category::class,
                 'choice_label' =>'title'

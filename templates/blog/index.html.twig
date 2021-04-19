@@ -10,7 +10,7 @@
             <h2>{{ post.createdBy }}</h2>
             <div class="metadata">Posté le {{ post.createdAt | date("d/m/Y") }} à {{ post.createdAt | date("H:i") }} dans la catégorie {{ post.category.title }}</div>
             <div class="content">
-                <img src="{{ post.image }}" alt="">
+                <img src="{{ vich_uploader_asset(post) }}" alt="{{ post.imageName }}" />
                 <h3>{{ post.title }}<h3>
                 <p>{{ post.content | raw }}</p>
             </div>
