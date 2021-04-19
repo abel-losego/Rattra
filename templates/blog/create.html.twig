@@ -16,6 +16,10 @@
         {{ form_widget(formPost.title) }}
     </div>
     <div class="form-groupe">
+        <label for="">Auteur</label>
+        {{ form_widget(formPost.createdBy)}}
+    </div>
+    <div class="form-groupe">
         <label for="">Image</label>
        {{ form_widget(formPost.imageFile) }}
     </div>
@@ -28,10 +32,7 @@
         {{ form_errors(formPost.content) }}
         {{ form_widget(formPost.content) }}
     </div>
-    <div class="form-groupe">
-        <label for="">Auteur</label>
-        {{ form_widget(formPost.createdBy)}}
-    </div>
+    
 
 
     <button type="submit" class="btn btn-success">

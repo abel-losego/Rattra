@@ -10,16 +10,19 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Form\RegistrationType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Repository\PostRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 
 class SecuController extends AbstractController
 {
-    #[Route('/registration', name: 'secu_registration')]
+    #[Route('/account/new', name: 'secu_newAccount')]
     public function registration(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder ): Response
     {
         
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
-        $user->setAdmin(True);
+        $user->setAdmin(False);
         $form->handleRequest($request);
         
         if($form->isSubmitted() && $form->isValid()){
@@ -33,7 +36,8 @@ class SecuController extends AbstractController
             return $this->redirectToRoute('secu_login');
         }
         return $this->render('secu/registration.html.twig', [
-            'formRegis' => $form->createView()
+            'formRegis' => $form->createView(),
+            'editMode' => $user->getId() !==null
         ]);
 
        
@@ -47,4 +51,25 @@ class SecuController extends AbstractController
 
     #[Route('/logout', name: 'secu_logout')]
     public function logout() {}
+
+    #[Route('/account', name: 'secu_account')]
+    public function account(PostRepository $repo, UserInterface $user){
+        $posts = $repo->findBy(array('createdBy' => $user->getUsername()));
+
+        return $this->render('secu/account.html.twig', [
+            'controller_name' => 'SecuController',
+            'posts' => $posts 
+        ]);
+
+    }
+
+    #[Route('/admin', name: 'secu_admin')]
+    public function admin(PostRepository $repo){
+        $posts = $repo->findAll();
+        return $this->render('secu/admin.html.twig', [
+            'controller_name' => 'SecuController',
+            'posts' => $posts,
+        ]);
+
+    }
 }

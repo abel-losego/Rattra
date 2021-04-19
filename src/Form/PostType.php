@@ -26,12 +26,12 @@ class PostType extends AbstractType
                     'placeholder' => 'Inserer votre titre'
                 ]
              ])
-            ->add('createdBy')
             ->add('content', TextareaType::class, [
                 'attr' => [
                     'placeholder' => 'Description du lieu et de ses environs (activités, visites, points positifs comme négatifs)'
                 ]
             ])
+            ->add('createdBy')
             ->add('imageFile', VichImageType::class)
             ->add('category', EntityType::class, [
                 'class'=> Category::class,

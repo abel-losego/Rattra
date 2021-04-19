@@ -1,15 +1,44 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Création d'un compte sur PhotosDeVacances.fr</h1>
+    <h1>
+    {% if editMode %}
+        Modification d'un compte sur PhotosDeVacances.fr
+        {% else %}
+        Création d'un compte sur PhotosDeVacances.fr
+        {% endif %}
+    </h1>
     {{ form_start(formRegis)}}
 
-    {{ form_row(formRegis.username, {'label': 'Nom d\'utilisateur', 'attr':{'placeholder': 'Entrer votre nom d\'utilisateur'}})}}
-    {{ form_row(formRegis.email, {'label': 'Nom d\'utilisateur', 'attr':{'placeholder': 'Entrer votre adresse email'}})}}
-    {{ form_row(formRegis.password, {'label': 'Nom d\'utilisateur', 'attr':{'placeholder': 'Entrer un mot de passe'}})}}
-    {{ form_row(formRegis.confirm_password, {'label': 'Nom d\'utilisateur', 'attr':{'placeholder': 'Confirmer votre mot de passe'}})}}
+    {{ form_row(formRegis.username, {
+        'label': 'Nom d\'utilisateur', 
+        'attr':
+            {'placeholder': 'Entrer votre nom d\'utilisateur'}})
+        }}
+    {{ form_row(formRegis.email, {
+        'label': 'Nom d\'utilisateur', 
+        'attr':
+            {'placeholder': 'Entrer votre adresse email'}})}}
+    {{ form_row(formRegis.password, 
+        {'label': 'Nom d\'utilisateur', 
+        'attr':
+            {'placeholder': 'Entrer un mot de passe'}})
+            }}
+    {{ form_row(formRegis.confirm_password, 
+        {'label': 'Nom d\'utilisateur', 
+        'attr':
+            {'placeholder': 'Confirmer votre mot de passe'}}
+            )}}
+    
 
-    <button type="submit" class="btn btn-success">Valider l'inscription</button>
+
+    <button type="submit" class="btn btn-success">
+        {% if editMode %}
+        Enregistrer les modifications
+        {% else %}
+        Creér le compte
+        {% endif %}
+    </button>
 
     {{ form_end(formRegis)}}
 

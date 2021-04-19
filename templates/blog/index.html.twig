@@ -3,21 +3,46 @@
 {% block title %}Vos photos à travers le monde{% endblock %}
 
 {% block body %}
-    <section class="posts">
-        {% for post in posts %}
+    <div id="headerwrap">
+    <div class="container">
+      <div class="row centered">
+        <div class="col-lg-8 col-lg-offset-2 mt">
+          <h1 class="animation slideDown">Mettez en valeur votre ville, votre origine, votre culture </h1>
+          <p class="mt"><button type="button" class="btn btn-cta btn-lg">En savoir plus</button></p>
+        </div>
+      </div>
+      <!-- /row -->
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /headerwrap -->
 
-        <article>
-            <h2>{{ post.createdBy }}</h2>
-            <div class="metadata">Posté le {{ post.createdAt | date("d/m/Y") }} à {{ post.createdAt | date("H:i") }} dans la catégorie {{ post.category.title }}</div>
-            <div class="content">
-                <img src="{{ vich_uploader_asset(post) }}" alt="{{ post.imageName }}" />
-                <h3>{{ post.title }}<h3>
-                <p>{{ post.content | raw }}</p>
-            </div>
-            <a href="" class="btn btn-primary">Commenter</a>
-            <a href="{{ path('blog_show', {id: post.id}) }}" class="btn btn-primary">Lire la suite</a>
-        </article>
-        {% endfor %}
-    </section>
+  <div class="container">
+
+    <div class="row mt centered ">
+      <div class="col-lg-4 col-lg-offset-4">
+        <h3>Où partirez-vous?</h3>
+        <hr>
+      </div>
+    </div>
+    <!-- /row -->
+    
+    <div class="row mt">
+    {% for post in posts %}
+      <div class="col-lg-4 col-md-4 col-xs-12 desc">
+        <a class="b-link-fade b-animate-go" href="{{ path('blog_show', {id: post.id}) }}"><img heigth="450" width="350" src="/images/posts/{{ post.imageName }}" alt="{{ post.imageName }}" />
+					<div class="b-wrapper">
+					  	<p class="b-from-right b-animate b-delay03">En savoir plus</p>
+					</div>
+				</a>
+        <p>{{ post.title }}</p>
+        <p class="lead">{{ post.content | raw }}</p>
+        <hr-d>
+          <p class="time"><i class="fa fa-comment-o"></i> {{ post.comments | length }} | <i class="fa fa-calendar"></i> {{ post.createdAt | date("d/m/Y") }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    <!-- /row -->
+  </div>
 
 {% endblock %}

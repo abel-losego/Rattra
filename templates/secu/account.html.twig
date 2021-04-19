@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Voici vos informations personnelles</h1>
+
+    <div class="form-groupe">
+        <label for="">Identifiant</label>
+        {{ app.user.username }}
+    </div>
+    <div class="form-groupe">
+        <label for="">Adresse email</label>
+        {{ app.user.email }}
+    </div>
+
+    
+
+    <h1>Liste de tous les posts mis en ligne par {{ app.user.username }}</h1>
+
+    <div class="row">
+        <div class="col-xs-2 desc">
+            <p>ID</p>
+        </div>
+        <div class="col-xs-2 desc">
+            <p>Titre</p>
+        </div>
+        <div class="col-xs-2 desc">
+            <p>Date</p>
+        </div>
+        <div class="col-xs-2 desc">
+            <p>Category</p>
+        </div>
+        <div class="col-xs-2 desc">
+            <p>Afficher</p>
+        </div>
+        <div class="col-xs-2 desc">
+            <p>Supprimer</p>
+        </div>
+        
+    </div>
+
+    {% for post in posts %}
+        <div class="row">
+        <div class="col-xs-2 desc">
+            {{ post.id}}
+        </div>
+        <div class="col-xs-2 desc">
+            {{ post.createdAt | date("d/m/Y") }}
+        </div>
+      
+        <div class="col-xs-2 desc">
+            {{ post.title }}
+        </div>
+        <div class="col-xs-2 desc">
+            {{ post.category.title }}
+        </div>
+        <div class="col-xs-2 desc">
+            <a href="{{ path('blog_show', {id: post.id}) }}" class="btn btn-primary">Afficher</a>
+        </div>
+        <div class="col-xs-2 desc">
+            <a href="{{ path('blog_delete', {id: post.id})}}" class="btn btn-primary">Supprimer</a>
+        </div>
+        </div>
+        <hr>
+
+    {% endfor %}
+
+    
+
+    {% if app.user.admin == true %}
+    <h2>Acceder au portail administrateur grâce à ce bouton</h2>
+    <div class="form-groupe">
+            <a href="{{ path('secu_admin') }}" class="btn btn-primary">Acceder</a>
+    </div>
+    {% endif %}
+
+{% endblock %}

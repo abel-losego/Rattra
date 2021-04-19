@@ -1,16 +1,21 @@
+
 {% extends 'base.html.twig' %}
 
 {% block body %}
     <article>
-            <h2>{{ post.createdBy }}</h2>
-            <div class="metadata">Posté le {{ post.createdAt | date("d/m/Y") }} à {{ post.createdAt | date("H:i") }} dans la catégorie {{ post.category.title }}</div>
+            <h2>{{ post.title }}</h2>
+            
             <div class="content">
-                <img src="{{ vich_uploader_asset(post) }}" alt="{{ post.imageName }}" />
-                <h3>{{ post.title }}<h3>
+                <img width="350" src="/images/posts/{{ post.imageName }}" alt="{{ post.imageName }}"/>
+                <p class="metadata">Posté le {{ post.createdAt | date("d/m/Y") }} à {{ post.createdAt | date("H:i") }}  par {{ post.createdBy }} dans la catégorie {{ post.category.title }}</p>
+                
                 <p>{{ post.content | raw }}</p>
             </div>
             <a href="" class="btn btn-primary">J'aime</a>
+            {% if app.user and app.user.username == post.createdBy %}
             <a href="{{ path('blog_edit', {id: post.id})}}" class="btn btn-primary">Modifier</a>
+            <a href="{{ path('blog_delete', {id: post.id})}}" class="btn btn-primary">Supprimer</a>
+            {% endif %}
             <hr>
             <h2>Commentaires ({{ post.comments | length }}) </h2>
             <section id="commentaires">
@@ -24,7 +29,14 @@
                         <div class="col">
                             {{comment.content | raw}}
                         </div>
+                        {% if app.user and app.user.admin == true %}
+                        <div>
+                        <a href="{{ path('comment_delete', {id: comment.id})}}" class="btn btn-primary">Supprimer</a>
+                        </div>
+                        {% endif %}
 
+
+                        
                     </div>
                 </div>
                 {% endfor %}
