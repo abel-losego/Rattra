@@ -11,7 +11,6 @@
                 
                 <p>{{ post.content | raw }}</p>
             </div>
-            <a href="" class="btn btn-primary">J'aime</a>
             {% if app.user and app.user.username == post.createdBy %}
             <a href="{{ path('blog_edit', {id: post.id})}}" class="btn btn-primary">Modifier</a>
             <a href="{{ path('blog_delete', {id: post.id})}}" class="btn btn-primary">Supprimer</a>

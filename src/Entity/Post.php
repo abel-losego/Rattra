@@ -50,6 +50,8 @@ class Post
      * @Assert\Length(
      *      min = 50,
      *      minMessage = "Votre description est trop courte, faites nous rêver !!",
+     *      max = 250,
+     *      maxMessage = "Votre description est trop longue, soyez bref !!",
      *      
      * )
      */

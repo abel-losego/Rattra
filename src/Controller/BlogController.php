@@ -109,9 +109,10 @@ class BlogController extends AbstractController
     #[Route('/blog/{id}/delete', name:"comment_delete")]
     public function deleteComment(Comment $comment, EntityManagerInterface $manager): Response 
     {     
-        
+        $post = $comment->getPost();
         $manager->remove($comment);
         $manager->flush();     
-        return $this->redirectToRoute('blog_show',['id' => $comment->getPost()]);
+        
+        return $this->redirectToRoute('blog');
       }
 }
